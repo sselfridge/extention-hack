@@ -29,8 +29,32 @@ chrome.runtime.onInstalled.addListener(function () {
 console.log("Hello from outsise.js!!");
 
 
+
+function setToggle(val){
+  chrome.storage.sync.set({ refreshOn: val }, function () {
+    console.log('NewRefresh is set');
+  });
+  
+}
+
+
 chrome.commands.onCommand.addListener(function (command) {
+
   console.log(`Command: ${command} has been activated!`);
+  chrome.storage.sync.get(['refreshOn'], function (result) {
+
+    if (result['refreshOn']) {
+      console.log('red');
+      setToggle(false);
+    } else {
+      setToggle(true);
+
+    }
+  });
+
+
+
+  
 });
 
 // This looks promising for watching files maybe?

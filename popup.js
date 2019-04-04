@@ -10,8 +10,12 @@ console.log('This is the popup page!!!!!$$$$$$$$$$$$$$$$$$$');
 //   changeColor.setAttribute('value', data.color);
 // });
 let setTime = document.getElementById('timeSubmit');
+
 let toggle = false;
 
+function setToggle(val) {
+  toggle = val;
+}
 
 console.log('Setting Color');
 chrome.storage.sync.get(['refreshOn'], function (result) {
@@ -19,10 +23,12 @@ chrome.storage.sync.get(['refreshOn'], function (result) {
     console.log('red');
     setTime.style.backgroundColor = 'red';
     setTime.innerHTML = 'STOP'
+    setToggle(true);
   } else {
     console.log('Green');
     setTime.style.backgroundColor = 'green'
     setTime.innerHTML = 'START'
+    setToggle(false);
   }
 });
 
