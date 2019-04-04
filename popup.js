@@ -3,27 +3,44 @@
 // found in the LICENSE file.
 
 'use strict';
-
-let changeColor = document.getElementById('changeColor');
-chrome.storage.sync.get('color', function (data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
-
-
+console.log('This is the popup page!!!!!$$$$$$$$$$$$$$$$$$$');
+// let changeColor = document.getElementById('changeColor');
+// chrome.storage.sync.get('color', function (data) {
+//   changeColor.style.backgroundColor = data.color;
+//   changeColor.setAttribute('value', data.color);
+// });
 let setTime = document.getElementById('timeSubmit');
 let toggle = false;
 
+
+console.log('Setting Color');
+chrome.storage.sync.get(['refreshOn'], function (result) {
+  if (result['refreshOn']) {
+    console.log('red');
+    setTime.style.backgroundColor = 'red';
+    setTime.innerHTML = 'STOP'
+  } else {
+    console.log('Green');
+    setTime.style.backgroundColor = 'green'
+    setTime.innerHTML = 'START'
+  }
+});
+
+
+
+
 setTime.onclick = function (element) {
   if (toggle) {
-    chrome.storage.sync.set({newRefreshTime: false}, function() {
-      setTime.style.backgroundColor = 'red';
+    chrome.storage.sync.set({ refreshOn: false }, function () {
+      setTime.style.backgroundColor = 'green';
+      setTime.innerHTML = 'START'
       toggle = false;
       console.log('NewRefresh is set to false');
     });
   } else {
-    chrome.storage.sync.set({newRefreshTime: true}, function() {
-      setTime.style.backgroundColor = 'green'
+    chrome.storage.sync.set({ refreshOn: true }, function () {
+      setTime.style.backgroundColor = 'red'
+      setTime.innerHTML = 'STOP'
       toggle = true;
       console.log('NewRefresh is set');
     });
@@ -33,6 +50,6 @@ setTime.onclick = function (element) {
   //   console.log('Refreshtime is set');
   // });
 
-  
+
 
 }

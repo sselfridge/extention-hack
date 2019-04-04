@@ -8,12 +8,12 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.set({ color: 'red' }, function () {
     console.log("The color is red.");
   });
-  chrome.storage.sync.set({ newRefreshTime: false }, function () {
+  chrome.storage.sync.set({ refreshOn: false }, function () {
     console.log("No new Refresh time ");
   });
-  chrome.storage.sync.set({ refreshTime: 100 }, function () {
-    console.log("Setting base refreshTime ");
-  });
+  // chrome.storage.sync.set({ refreshTime: 100 }, function () {
+  //   console.log("Setting base refreshTime ");
+  // });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({

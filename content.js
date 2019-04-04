@@ -1,45 +1,58 @@
 // refreshTime = 1000;
-
+isTabActive = false;
 window.onfocus = function () {
-
     isTabActive = true;
+    chrome.storage.sync.set({ userInactive: false }, function () {
+        console.log("User Active - Stop refreshing ");
+    });
 };
 
 window.onblur = function () {
-
     isTabActive = false;
+    console.time("setToTrue")
+    chrome.storage.sync.set({ userInactive: true }, function () {
+        console.log("Inactive Active - Start Refreshing ");
+    });
+    console.timeEnd("setToTrue")
+
 };
 
 console.log(`CONTENT.JS CHECKING IN!!`);
 
+setInterval(function(){
+    console.log(isTabActive ? 'Active!!' : 'Inactive');
+},1000)
 
+function userInactive(flag) {
+    console.log(`User Inactive:${flag}`);
+    if (flag === true) {
+        //if setting is on - refresh page
+        chrome.storage.sync.get(['refreshOn'], function (result) {
+            needRefresh = result['refreshOn'];
+            if (needRefresh) {
+                location.reload(true)
+                console.log(`Extention Active------REFRESH THIS SHIT!!!!!!!!!!!!!!!`);
+            }
 
-function checkRefreshFlag(flag) {
-    console.log(`Refreshed--------------${flag}---------`);
-    if(flag === true){
-        // chrome.storage.sync.set({ 'newRefreshTime': false }, function () {
-        //     console.log('NewRefresh is set to ');
-        //     // location.reload(true);
-        // });
-        refreshTime = 100;
-        location.reload(true)
+        });
+        // refreshTime = 100;
     }
 }
 
 
 function refreshPage() {
-    // chrome.storage.sync.get(['newRefreshTime'], function (result) {
+    // chrome.storage.sync.get(['refreshOn'], function (result) {
     //     let needRefresh;
-    //     console.log(result['newRefreshTime']);
-    //     needRefresh = result['newRefreshTime'];
+    //     console.log(result['refreshOn']);
+    //     needRefresh = result['refreshOn'];
     //     console.log('From Content');
 
     //     callOnMe(needRefresh);
     // });
-    chrome.storage.sync.get(['newRefreshTime'], function (result) {
-        needRefresh = result['newRefreshTime'];
+    chrome.storage.sync.get(['userInactive'], function (result) {
+        isUserInactive = result['userInactive'];
 
-        checkRefreshFlag(needRefresh);
+        userInactive(isUserInactive);
         setTimeout(refreshPage, 2000);
     });
 
