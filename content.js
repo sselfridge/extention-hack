@@ -1,4 +1,4 @@
-refreshTime = 1000;
+// refreshTime = 1000;
 
 window.onfocus = function () {
 
@@ -14,15 +14,15 @@ console.log(`CONTENT.JS CHECKING IN!!`);
 
 
 
-function callOnMe(flag) {
+function checkRefreshFlag(flag) {
     console.log(`Refreshed--------------${flag}---------`);
     if(flag === true){
-        chrome.storage.sync.set({ 'newRefreshTime': false }, function () {
-            console.log('NewRefresh is set to ');
-            // location.reload(true);
-        });
-        refreshTime = 1000;
-        // location.reload(true)
+        // chrome.storage.sync.set({ 'newRefreshTime': false }, function () {
+        //     console.log('NewRefresh is set to ');
+        //     // location.reload(true);
+        // });
+        refreshTime = 100;
+        location.reload(true)
     }
 }
 
@@ -39,13 +39,13 @@ function refreshPage() {
     chrome.storage.sync.get(['newRefreshTime'], function (result) {
         needRefresh = result['newRefreshTime'];
 
-        callOnMe(needRefresh);
+        checkRefreshFlag(needRefresh);
+        setTimeout(refreshPage, 2000);
     });
 
-    console.log(`Refesh Time is: ${refreshTime}`);
+    // console.log(`Refesh Time is: ${refreshTime}`);
 
-    setTimeout(refreshPage, 1000);
 }
 
-setTimeout(refreshPage, 1000);
+setTimeout(refreshPage, 2000);
 

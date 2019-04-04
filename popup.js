@@ -16,20 +16,22 @@ let toggle = false;
 
 setTime.onclick = function (element) {
   if (toggle) {
-    changeColor.style.backgroundColor = 'red';
-    toggle = false;
+    chrome.storage.sync.set({newRefreshTime: false}, function() {
+      setTime.style.backgroundColor = 'red';
+      toggle = false;
+      console.log('NewRefresh is set to false');
+    });
   } else {
-    changeColor.style.backgroundColor = 'green'
-    toggle = true;
+    chrome.storage.sync.set({newRefreshTime: true}, function() {
+      setTime.style.backgroundColor = 'green'
+      toggle = true;
+      console.log('NewRefresh is set');
+    });
   }
 
-  chrome.storage.sync.set({refreshTime: '100'}, function() {
-    console.log('Refreshtime is set');
-  });
-
-  chrome.storage.sync.set({newRefreshTime: true}, function() {
-    console.log('NewRefresh is set');
-  });
+  // chrome.storage.sync.set({refreshTime: '100'}, function() {
+  //   console.log('Refreshtime is set');
+  // });
 
   
 
