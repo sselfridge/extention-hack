@@ -17,30 +17,29 @@ console.log(`CONTENT.JS CHECKING IN!!`);
 function callOnMe(flag) {
     console.log(`Refreshed--------------${flag}---------`);
     if(flag === true){
-        chrome.storage.local.set({ 'newRefreshTime': false }, function () {
+        chrome.storage.sync.set({ 'newRefreshTime': false }, function () {
             console.log('NewRefresh is set to ');
             // location.reload(true);
         });
-        refreshTime = 100;
+        refreshTime = 1000;
         // location.reload(true)
     }
 }
 
 
 function refreshPage() {
+    // chrome.storage.sync.get(['newRefreshTime'], function (result) {
+    //     let needRefresh;
+    //     console.log(result['newRefreshTime']);
+    //     needRefresh = result['newRefreshTime'];
+    //     console.log('From Content');
 
-
-    console.log(`Refresh Page Run`);
-
-    
+    //     callOnMe(needRefresh);
+    // });
     chrome.storage.sync.get(['newRefreshTime'], function (result) {
-        let needRefresh;
-        console.log(result['newRefreshTime']);
         needRefresh = result['newRefreshTime'];
-        console.log('From Content');
 
         callOnMe(needRefresh);
-
     });
 
     console.log(`Refesh Time is: ${refreshTime}`);
