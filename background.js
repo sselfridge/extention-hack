@@ -8,6 +8,9 @@ chrome.runtime.onInstalled.addListener(function () {
     console.log("No new Refresh time ");
   });
 
+  chrome.storage.sync.set({ userInactive: false }, function () { });
+
+
   // Use page state to only activate on .html pages? ....if you're using a server
   // you should be using something more sophisticated maybe??
 

@@ -26,14 +26,16 @@ window.onblur = function () {
 
 
 function refreshPage() {
-
+    // console.log(`Refresh Page`);
     chrome.storage.sync.get(['userInactive'], function (result) {
         isUserInactive = result['userInactive'];
-
+        
+        // console.log(`User Inactive: ${isUserInactive}`);
         if (isUserInactive === true) {
             //if setting is on - refresh page
             chrome.storage.sync.get(['refreshOn'], function (result) {
                 needRefresh = result['refreshOn'];
+                // console.log(`Need Refresh: ${needRefresh}`);
                 if (needRefresh) {
                     location.reload(true)
                 }
