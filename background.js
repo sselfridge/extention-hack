@@ -64,11 +64,11 @@ setInterval(function () {
       // console.log('userInactive: ', userInactive);
 
       if ( userInactive && refreshOn) {
-        chrome.browserAction.setBadgeText({ text: 'Refreshing' });
+        chrome.browserAction.setBadgeText({ text: 'Loop ' });
         chrome.browserAction.setBadgeBackgroundColor({ color: 'green' })
 
       } else if (!userInactive && refreshOn) {
-        chrome.browserAction.setBadgeText({ text: 'Stopped' });
+        chrome.browserAction.setBadgeText({ text: 'Hold' });
         chrome.browserAction.setBadgeBackgroundColor({ color: 'red' })
       }
 

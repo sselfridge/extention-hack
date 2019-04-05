@@ -6,16 +6,9 @@ window.onfocus = function () {
 };
 
 window.onblur = function () {
-
     //TODO - track edge that user leaves the screen, if right, don't restart refreshing
-
-
     isTabActive = false;
     chrome.storage.sync.set({ userInactive: true }, function () { });
-
-
-
-
 };
 
 
