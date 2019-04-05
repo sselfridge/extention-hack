@@ -1,34 +1,30 @@
 'use strict';
-let setTime = document.getElementById('timeSubmit');
+let on_off_button = document.getElementById('on_off_button');
 
 
 let toggle = false; //toggle to keep track of if the extention is activated
 chrome.storage.sync.get(['refreshOn'], function (result) {
   if (result['refreshOn']) {
-    setTime.style.backgroundColor = 'red';
-    setTime.innerHTML = 'STOP'
+    on_off_button.innerHTML = 'STOP'
     toggle = true;
   } else {
-    setTime.style.backgroundColor = 'green'
-    setTime.innerHTML = 'START'
+    on_off_button.innerHTML = 'START'
     toggle = false;
   }
 });
 
 
-setTime.onclick = function (element) {
+on_off_button.onclick = function (element) {
   if (toggle) {
     chrome.storage.sync.set({ refreshOn: false }, function () {
-      setTime.style.backgroundColor = 'green';
-      setTime.innerHTML = 'START'
+      on_off_button.innerHTML = 'START'
       toggle = false;      
     });
   } else {
     chrome.storage.sync.set({ refreshOn: true }, function () {
-      setTime.style.backgroundColor = 'red'
-      setTime.innerHTML = 'STOP'
+      on_off_button.innerHTML = 'STOP'
       toggle = true;
-      console.log(chrome.browserAction.setBadgeText({text: ''}));
+      chrome.browserAction.setBadgeText({text: ''});
     });
   }
 }

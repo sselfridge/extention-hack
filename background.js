@@ -27,7 +27,7 @@ chrome.runtime.onInstalled.addListener(function () {
 
 function setToggle(val) {
   chrome.storage.sync.set({ refreshOn: val }, function () {
-    console.log('NewRefresh is set');
+    // console.log('NewRefresh is set');
   });
 
 }
@@ -35,7 +35,7 @@ function setToggle(val) {
 
 chrome.commands.onCommand.addListener(function (command) {
 
-  console.log(`Command: ${command} has been activated!`);
+  // console.log(`Command: ${command} has been activated!`);
   chrome.storage.sync.get(['refreshOn'], function (result) {
 
     if (result['refreshOn']) {
@@ -61,17 +61,17 @@ setInterval(function () {
       // console.log('userInactive: ', userInactive);
 
       if ( userInactive && refreshOn) {
-        chrome.browserAction.setBadgeText({ text: 'Running' });
+        chrome.browserAction.setBadgeText({ text: 'Refreshing' });
         chrome.browserAction.setBadgeBackgroundColor({ color: 'green' })
 
       } else if (!userInactive && refreshOn) {
-        chrome.browserAction.setBadgeText({ text: 'Paused' });
+        chrome.browserAction.setBadgeText({ text: 'Stopped' });
         chrome.browserAction.setBadgeBackgroundColor({ color: 'red' })
       }
 
     });
   });
-}, 800)
+}, 400)
 
 // This looks promising for watching files maybe?
 // https://developer.chrome.com/apps/fileSystem#method-getVolumeList

@@ -1,14 +1,3 @@
-
-let xPos;
-
-
-
-function findScreenCoords(mouseEvent){
-  xPos = mouseEvent.screenX;
-}
-
-document.documentElement.onmousemove = findScreenCoords;
-
 isTabActive = false; //used for debugging in setInterval
 
 window.onfocus = function () {
@@ -19,18 +8,11 @@ window.onfocus = function () {
 window.onblur = function () {
 
     //TODO - track edge that user leaves the screen, if right, don't restart refreshing
-    
-    let offX = window.innerWidth - xPos
-    if(offX < 100){
-        //hold
-        console.log(`offX = ${offX} = ${window.innerWidth} - ${xPos}`);
-        chrome.storage.sync.set({ refreshOn: false }, function () {});
-        chrome.storage.sync.set({ userInactive: false }, function () { });
 
-    }else{
-        isTabActive = false;
-        chrome.storage.sync.set({ userInactive: true }, function () { });
-    }
+
+    isTabActive = false;
+    chrome.storage.sync.set({ userInactive: true }, function () { });
+
 
 
 
@@ -54,7 +36,6 @@ function refreshPage() {
                 needRefresh = result['refreshOn'];
                 if (needRefresh) {
                     location.reload(true)
-                    console.log(`Extention Active------REFRESH THIS SHIT!!!!!!!!!!!!!!!`);
                 }
 
             });
